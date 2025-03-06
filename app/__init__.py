@@ -30,6 +30,19 @@ def create_app(config_name=None):
     if not app.config.get('SQLALCHEMY_DATABASE_URI'):
         app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI', 'sqlite:///pickleball.db')
     
+    # Handle Vercel serverless environment
+    if 'VERCEL' in os.environ:
+        # Make sure tmp directory exists for SQLite in Vercel
+        tmp_dir = '/tmp'
+        if not os.path.exists(tmp_dir):
+            os.makedirs(tmp_dir)
+        
+        # If using instance folder in SQLite path, make sure it exists
+        if 'sqlite:///instance/' in app.config['SQLALCHEMY_DATABASE_URI']:
+            instance_dir = os.path.join(os.getcwd(), 'instance')
+            if not os.path.exists(instance_dir):
+                os.makedirs(instance_dir)
+    
     # Enable CORS
     CORS(app)
     

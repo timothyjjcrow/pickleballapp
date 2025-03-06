@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+*.class
+.Python
+env/
+venv/
+instance/
+.pytest_cache/
+.git/
+app.db
+pickleball.db

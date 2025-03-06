@@ -4,6 +4,10 @@ class Config:
     """Base configuration."""
     SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-key-please-change-in-production')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///app.db')
+    # Handle Vercel's data persistence limitations
+    if 'VERCEL' in os.environ:
+        # On Vercel, use a more persistent database solution
+        SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///tmp/app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'jwt-dev-key-change-in-production')
     JWT_ACCESS_TOKEN_EXPIRES = 3600  # 1 hour
