@@ -1,0 +1,11 @@
+---
+description: this is the projects tech stack
+globs: 
+alwaysApply: false
+---
+-python for the backend
+-html/js for the frontend
+-sql databases, never json file storage
+-eslasticsearch for seaching, using elsastic.co hosting
+-elastic.co wil have dev and prod indexes
+-python tests

@@ -1,0 +1,215 @@
+/* Main Styles */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Navbar */
+.navbar-brand {
+  font-weight: bold;
+}
+
+/* Game Cards */
+.game-card {
+  transition: transform 0.2s;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.game-card .card-header {
+  background-color: #4a6fdc;
+  color: white;
+  font-weight: bold;
+}
+
+.game-card .skill-level {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.skill-level.beginner {
+  background-color: #28a745;
+  color: white;
+}
+
+.skill-level.intermediate {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.skill-level.advanced {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Court Cards */
+.court-card {
+  transition: transform 0.2s;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.court-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.court-card .card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+.court-rating {
+  color: #ffc107;
+}
+
+/* Chat */
+.chat-container {
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  padding: 15px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-message {
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-radius: 18px;
+  max-width: 80%;
+  word-break: break-word;
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-message.sent {
+  background-color: #4a6fdc;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-message.received {
+  background-color: #e9ecef;
+  color: #333;
+  margin-right: auto;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-username {
+  font-weight: bold;
+  font-size: 0.8rem;
+  margin-bottom: 3px;
+  color: inherit;
+}
+
+.chat-content {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.chat-timestamp {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: right;
+  margin-top: 4px;
+}
+
+.chat-message.received .chat-timestamp {
+  color: #6c757d;
+}
+
+.chat-input-container {
+  display: flex;
+  margin-top: 10px;
+}
+
+.chat-input {
+  border-radius: 20px;
+  padding-left: 15px;
+  flex-grow: 1;
+  border: 1px solid #ced4da;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.chat-input:focus {
+  border-color: #4a6fdc;
+  box-shadow: 0 0 0 0.2rem rgba(74, 111, 220, 0.25);
+}
+
+.send-message-btn {
+  margin-left: 8px;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Connection status indicator */
+.chat-connection-status {
+  text-align: center;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: inline-block;
+  margin: 0 auto 10px;
+}
+
+.chat-connection-status.connected {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.chat-connection-status.disconnected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.chat-connection-status.connecting {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+/* Search */
+.search-container {
+  margin-bottom: 30px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .chat-message {
+    max-width: 90%;
+  }
+}
