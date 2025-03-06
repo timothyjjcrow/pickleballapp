@@ -22,12 +22,9 @@ def create_app(config_name=None):
     if config_name is None:
         config_name = os.getenv('FLASK_ENV', 'development')
     
-    if config_name == 'development':
-        app.config.from_object('app.config.development.DevelopmentConfig')
-    elif config_name == 'testing':
-        app.config.from_object('app.config.testing.TestingConfig')
-    elif config_name == 'production':
-        app.config.from_object('app.config.production.ProductionConfig')
+    # Import and use the new config module
+    from config import config
+    app.config.from_object(config[config_name])
     
     # Ensure DATABASE_URI is set
     if not app.config.get('SQLALCHEMY_DATABASE_URI'):
