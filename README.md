@@ -13,7 +13,7 @@ A web application for scheduling and managing pickleball games. Find courts, sch
 ## Tech Stack
 
 - **Backend**: Flask (Python)
-- **Database**: SQLite with SQLAlchemy ORM
+- **Database**: SQLite with SQLAlchemy ORM (local/dev) / PostgreSQL (production)
 - **Frontend**: HTML, CSS, JavaScript
 - **Authentication**: JWT (JSON Web Tokens)
 
@@ -47,20 +47,58 @@ A web application for scheduling and managing pickleball games. Find courts, sch
    pip install -r requirements.txt
    ```
 
-4. Initialize and seed the database
+4. Initialize the database
 
    ```
-   python scripts/init_db.py     # Create database tables
-   python scripts/seed_db.py     # Populate with real court data and sample games
+   python manage.py setup-db
    ```
 
 5. Run the application
 
    ```
-   python run.py
+   python manage.py run
    ```
 
-6. Access the application at http://localhost:5000
+6. Access the application at http://localhost:8000
+
+## Using the Management Script
+
+The `manage.py` script provides a unified command-line interface for common tasks:
+
+```
+python manage.py [command] [options]
+```
+
+Available commands:
+
+- **run**: Start the Flask application
+
+  ```
+  python manage.py run [--env development|production|testing] [--debug] [--port PORT]
+  ```
+
+- **setup-db**: Initialize the database
+
+  ```
+  python manage.py setup-db [--env development|production|testing]
+  ```
+
+- **migrate**: Run database migrations
+
+  ```
+  python manage.py migrate [--env development|production|testing]
+  ```
+
+- **test**: Run the test suite
+
+  ```
+  python manage.py test [--test-path PATH]
+  ```
+
+- **create-env**: Create or update .env file
+  ```
+  python manage.py create-env [--env development|production|testing] [--db-url URL] [--force]
+  ```
 
 ## Project Structure
 
@@ -71,20 +109,19 @@ A web application for scheduling and managing pickleball games. Find courts, sch
   - `static/` - Static assets (JS, CSS)
   - `templates/` - HTML templates
 - `scripts/` - Utility scripts
-  - `init_db.py` - Initialize database tables
-  - `migrate_courts.py` - Import court data
-  - `seed_db.py` - Populate database with sample data
+- `migrations/` - Database migration scripts
 - `instance/` - Instance-specific files
-  - `pickleball.db` - SQLite database
+  - `pickleball.db` - SQLite database (development)
+- `manage.py` - Management script for common tasks
 - `run.py` - Application entry point
 - `wsgi.py` - WSGI entry point for production
-- `test_models.py` - Database model tests
-- `test_api.py` - API endpoint tests
-- `run_tests.py` - Script to run all tests
+- `config.py` - Application configuration
+- `init_db.py` - Database initialization
+- `test_*.py` - Test files
 
 ## Database
 
-The application uses SQLite with SQLAlchemy ORM for data storage.
+The application uses SQLite with SQLAlchemy ORM for local development and testing, and PostgreSQL for production.
 
 ### Database Models
 
@@ -94,18 +131,17 @@ The application uses SQLite with SQLAlchemy ORM for data storage.
 - **GameParticipant**: Many-to-many relationship between games and users
 - **ChatMessage**: Messages associated with games
 
-### Database Initialization
+### Database Initialization and Migration
 
-The database can be initialized and populated using the provided scripts:
+The database can be initialized and migrated using the management script:
 
 ```
-python scripts/init_db.py     # Create database tables
-python scripts/seed_db.py     # Populate with real court data and sample games
+# Initialize database for development
+python manage.py setup-db --env development
+
+# Run migrations for production
+python manage.py migrate --env production
 ```
-
-The `seed_db.py` script loads real court data from the `courts.json` file located in the root directory. This file contains detailed information about pickleball courts including locations, amenities, hours, and ratings. The script also creates sample users, games, participants, and chat messages to demonstrate the application's functionality.
-
-For more details about the database scripts, see [scripts/README.md](scripts/README.md).
 
 ## Testing
 
@@ -116,14 +152,13 @@ The application includes comprehensive tests for database models and API endpoin
 To run all tests:
 
 ```
-python run_tests.py
+python manage.py test
 ```
 
-To run specific test modules:
+To run specific test files:
 
 ```
-python test_models.py  # Run model tests only
-python test_api.py     # Run API tests only
+python manage.py test --test-path test_models.py
 ```
 
 ### Test Coverage
@@ -134,6 +169,32 @@ python test_api.py     # Run API tests only
 ## Deployment
 
 For production deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
+
+## Deployment Options
+
+### Local Development
+
+See the [local setup instructions](#setup-and-installation).
+
+### Vercel Deployment
+
+For deploying to Vercel, see [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md).
+
+### Heroku Deployment
+
+For deploying to Heroku, see [HEROKU_DEPLOYMENT.md](HEROKU_DEPLOYMENT.md).
+
+Heroku deployment uses PostgreSQL for the database, ensuring data persistence across application restarts and deployments.
+
+#### Quick Heroku Deployment Steps:
+
+1. Create a Heroku account and install the Heroku CLI
+2. Create a new Heroku app: `heroku create`
+3. Add PostgreSQL: `heroku addons:create heroku-postgresql:mini`
+4. Deploy your code: `git push heroku main`
+5. Open the app: `heroku open`
+
+For detailed instructions, see [HEROKU_DEPLOYMENT.md](HEROKU_DEPLOYMENT.md).
 
 ## License
 
